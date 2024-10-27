@@ -1,0 +1,262 @@
+﻿@page "/edit/{OrderId:long}"
+@using SalesOrder.Client.Services
+@using SalesOrder.Client.Services.Models
+@using SalesOrder.Shared
+@inject ISalesOrderService SalesOrderService
+@inject NavigationManager NavigationManager
+@inject ILogger<SoOrderEditPage> Logger
+
+<div class="container-fluid">
+    <div class="header">
+        <h2>SALES ORDER</h2>
+    </div>
+
+    <EditForm Model="@model" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator/>
+        <div class="header-secondary mt-1 d-flex justify-content-center">
+            <h2>Sales Order Information</h2>
+        </div>
+
+        <div class="p-5">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group mb-3">
+                        <label for="orderNo">Order No <span class="required">*</span></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <InputText id="orderNo" class="form-control" @bind-Value="model.OrderNo"/>
+                        <ValidationMessage For="@(() => model.OrderNo)" class="validation-message"/>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group mb-3">
+                        <label for="customerId">Customer</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <InputSelect id="customerId" class="form-control" @bind-Value="model.ComCustomerId">
+                            <option value="">Select Customer</option>
+                            @foreach (var customer in customers)
+                            {
+                                <option value="@customer.ComCustomerId">@customer.CustomerName</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => model.ComCustomerId)" class="validation-message"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group mb-3">
+                        <label for="orderDate">Order Date <span class="required">*</span> </label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <InputDate id="orderDate" class="form-control" @bind-Value="model.OrderDate"/>
+                        <ValidationMessage For="@(() => model.OrderDate)" class="validation-message"/>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group mb-3">
+                        <label for="address">Address</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <InputTextArea id="address" class="form-control" @bind-Value="model.Address" style="height: 100px;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-secondary mt-2 d-flex justify-content-center">
+            <h2>Detail Item Information</h2>
+        </div>
+
+        <div class="items-section mt-4">
+            <button type="button" class="btn btn-add mb-3" @onclick="AddItem">Add Item</button>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-header">
+                    <tr>
+                        <th style="width: 10%">No</th>
+                        <th style="width: 15%">Action</th>
+                        <th style="width: 25%">Item Name</th>
+                        <th style="width: 25%">Quantity</th>
+                        <th style="width: 25%">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @if (!model.SoItems.Any())
+                    {
+                        <tr>
+                            <td colspan="5">
+                                Add item first
+                            </td>
+                        </tr>
+                    }
+
+                    @foreach (var item in model.SoItems ?? new())
+                    {
+                        <tr>
+                            <td>@(model.SoItems?.IndexOf(item) + 1)</td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    @if (item.OnChange)
+                                    {
+                                        <button type="button" class="btn btn-link p-0" @onclick="() => SaveItem(item)">
+                                            <i class="fas fa-save"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-link p-0" @onclick="() => EditItem(item)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    }
+                                    <button type="button" class="btn btn-link p-0" @onclick="() => RemoveItem(item)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+
+
+                            @if (item.OnChange)
+                            {
+                                <td>
+                                    <InputText class="form-control" @bind-Value="item.ItemName"/>
+                                    <ValidationMessage For="@(() => item.ItemName)" class="validation-message"/>
+                                </td>
+                                <td>
+                                    <InputNumber class="form-control" @bind-Value="item.Quantity"/>
+                                    <ValidationMessage For="@(() => item.Quantity)" class="validation-message"/>
+                                </td>
+                                <td>
+                                    <InputNumber class="form-control" @bind-Value="item.Price"/>
+                                    <ValidationMessage For="@(() => item.Price)" class="validation-message"/>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>@item.ItemName</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Price</td>
+                            }
+                        </tr>
+                    }
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td><b>Total Item : @model.SoItems?.Sum(x => x.Quantity)</b></td>
+                        <td><b>Total Amount : @($"{model.SoItems?.Sum(x => x.Price):N}")</b></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-center">
+            <button type="submit" class="btn btn-sm btn-add">Save</button>
+            <button type="button" class="btn btn-sm btn-export ms-2" @onclick="GoBack">Close</button>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    [Parameter] public long OrderId { get; set; }
+
+    private SalesOrderUpdateModel? model = new() { SoItems = new List<SalesOrderItemUpdateModel>() };
+    private List<ComCustomer> customers = new();
+    private bool loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            customers = await SalesOrderService.GetComCustomerAsync();
+
+            var order = await SalesOrderService.GetOrderByIdAsync(OrderId);
+            if (order == null)
+            {
+                NavigationManager.NavigateTo("/");
+                return;
+            }
+
+            model = new SalesOrderUpdateModel
+            {
+                SoOrderId = order.SoOrderId,
+                OrderNo = order.OrderNo,
+                OrderDate = order.OrderDate,
+                ComCustomerId = order.ComCustomerId,
+                Address = order.Address,
+                SoItems = order.SoItems?.Select(i => new SalesOrderItemUpdateModel
+                {
+                    SoItemId = i.SoItemId,
+                    SoOrderId = i.SoOrderId,
+                    ItemName = i.ItemName,
+                    Quantity = i.Quantity,
+                    Price = i.Price
+                }).ToList()
+            };
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error loading sales order for edit");
+            // TODO: Show error message to user
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void AddItem()
+    {
+        model!.SoItems ??= new List<SalesOrderItemUpdateModel>();
+        model.SoItems.Add(new SalesOrderItemUpdateModel { SoOrderId = OrderId });
+    }
+
+    private void EditItem(SalesOrderItemUpdateModel item)
+    {
+        item.OnChange = true;
+    }
+
+    private void SaveItem(SalesOrderItemUpdateModel item)
+    {
+        item.OnChange = false;
+    }
+
+    private void RemoveItem(SalesOrderItemUpdateModel item)
+    {
+        model!.SoItems?.Remove(item);
+    }
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            if (model == null) return;
+            await SalesOrderService.UpdateOrderAsync(model);
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error updating sales order");
+            // TODO: Show error message to user
+        }
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+}

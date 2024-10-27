@@ -1,0 +1,24 @@
+@Server_HostAddress = http://localhost:5162
+
+GET {{Server_HostAddress}}/api/v1/SalesOrder/Get
+Accept: application/json
+
+###
+
+GET {{Server_HostAddress}}/api/v1/SalesOrder/GetCustomers
+Accept: application/json
+
+###
+
+GET {{Server_HostAddress}}/api/v1/SalesOrder/GetById
+Accept: application/json
+
+###
+
+POST {{Server_HostAddress}}/api/v1/SalesOrder/Create
+Accept: application/json
+
+###
+
+PATCH {{Server_HostAddress}}/api/v1/SalesOrder/Update
+Accept: application/json

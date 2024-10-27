@@ -1,0 +1,51 @@
+﻿@using SalesOrder.Shared
+
+<div class="search-panel">
+    <EditForm Model="@searchModel" OnValidSubmit="@HandleSearch">
+        <div class="row">
+            <div class="col-md-2 mb-3 mb-md-0">
+                <div class="form-group">
+                    <label for="keywords">Keywords</label>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="form-group">
+                    <InputText id="keywords" class="form-control" @bind-Value="searchModel.Keywords"/>
+                </div>
+            </div>
+            <div class="col-md-2 mb-5 mb-md-0">
+                <div class="form-group">
+                    <label for="orderDate">Order Date</label>
+                </div>
+            </div>
+            <div class="col-md-4 mb-5 mb-md-0">
+                <div class="form-group">
+                    <InputDate id="orderDate" class="form-control" @bind-Value="searchModel.OrderDate"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mb-lg-5">
+                <button type="submit" class="btn btn-search float-end">Search</button>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private SearchModel searchModel = new();
+
+    [Parameter]
+    public EventCallback<SearchModel> OnSearch { get; set; }
+
+    private async Task HandleSearch()
+    {
+        await OnSearch.InvokeAsync(searchModel);
+    }
+
+    public class SearchModel
+    {
+        public string? Keywords { get; set; }
+        public DateTime? OrderDate { get; set; }
+    }
+}

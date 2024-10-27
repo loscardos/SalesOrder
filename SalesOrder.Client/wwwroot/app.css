@@ -1,0 +1,253 @@
+body {
+    background: linear-gradient(135deg, #6aa4dd 0%, #4477b0 100%);
+    min-height: 100vh;
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.header  {
+    background: #003366;
+    color: white;
+    padding: 20px 20px;
+    margin: -20px -20px 20px -20px;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.header-secondary  {
+    background: #002044;
+    color: white;
+    padding: 8px 20px;
+    margin: -20px -20px 20px -20px;
+}
+
+.header-secondary h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.search-panel {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    color: #003366;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    height: 38px;
+    padding: 0.375rem 0.75rem;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.action-buttons {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn-add {
+    background-color: #7d1935;
+    color: white;
+    border: none;
+}
+
+.btn-add:hover {
+    background-color: #641428;
+    color: white;
+}
+
+.btn-export {
+    background-color: #003366;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-export:hover {
+    background-color: #002347;
+    color: white;
+}
+
+.btn-print {
+    background-color: #ffd700;
+    color: #000;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-print:hover {
+    background-color: #e6c200;
+}
+
+.btn-search {
+    background-color: #003366;
+    color: white;
+    border: none;
+    height: 38px;
+    width: 10%;
+}
+
+.btn-search:hover {
+    background-color: #002347;
+}
+
+.table-responsive {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table-header {
+    background-color: #003366;
+}
+
+.table-header th {
+    color: white;
+    font-weight: 500;
+    padding: 12px;
+    border: none;
+}
+
+.table td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table-striped tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.btn-link {
+    color: #003366;
+    padding: 4px;
+}
+
+.btn-link:hover {
+    color: #001933;
+}
+
+.pagination {
+    background: white;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.page-item .page-link {
+    color: #003366;
+    border: 1px solid #dee2e6;
+    margin: 0 2px;
+}
+
+.page-item.active .page-link {
+    background-color: #003366;
+    border-color: #003366;
+    color: white;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+.record-info {
+    color: #003366;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    padding: 8px;
+    background: white;
+    border-radius: 4px;
+    display: inline-block;
+    float: right;
+}
+
+/* Loading spinner */
+.spinner-border {
+    color: #003366;
+}
+
+/* Custom icons */
+.action-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .record-info {
+        float: none;
+        display: block;
+        text-align: center;
+    }
+}
+
+.input-error {
+    border: 2px solid red;
+}
+
+.required {
+    color: red;
+}
+
+.validation-message {
+    color: red; 
+}

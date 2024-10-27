@@ -1,0 +1,11 @@
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\bin\Debug\net8.0\SalesOrder.Shared.deps.json
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\bin\Debug\net8.0\SalesOrder.Shared.dll
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\bin\Debug\net8.0\SalesOrder.Shared.pdb
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\obj\Debug\net8.0\SalesOrder.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\obj\Debug\net8.0\SalesOrder.Shared.AssemblyInfoInputs.cache
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\obj\Debug\net8.0\SalesOrder.Shared.AssemblyInfo.cs
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\obj\Debug\net8.0\SalesOrder.Shared.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\obj\Debug\net8.0\SalesOrder.Shared.dll
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\obj\Debug\net8.0\refint\SalesOrder.Shared.dll
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\obj\Debug\net8.0\SalesOrder.Shared.pdb
+C:\Users\Administrator\RiderProjects\SalesOrder\SalesOrder.Shared\obj\Debug\net8.0\ref\SalesOrder.Shared.dll

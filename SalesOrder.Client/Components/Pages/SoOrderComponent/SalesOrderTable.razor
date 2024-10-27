@@ -1,0 +1,113 @@
+﻿@using SalesOrder.Shared
+
+@if (Loading)
+{
+    <div class="text-center p-4">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="table-header">
+            <tr>
+                <th style="width: 10%">No</th>
+                <th style="width: 15%">Action</th>
+                <th style="width: 25%">Sales Order</th>
+                <th style="width: 25%">Order Date</th>
+                <th style="width: 25%">Customer</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var order in Orders)
+            {
+                <tr>
+                    <td>@order.OrderNo</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-link p-0" @onclick="() => OnEdit.InvokeAsync(order.SoOrderId)">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-link p-0" @onclick="() => OnDelete.InvokeAsync(order.SoOrderId)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td>@order.OrderNo</td>
+                    <td>@order.OrderDate.ToString("dd/M/yyyy")</td>
+                    <td>@(order.ComCustomer?.CustomerName ?? "-")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination mb-0">
+                <li class="page-item @(CurrentPage == 1 ? "disabled" : "")">
+                    <button class="page-link" @onclick="() => OnPreviousPage.InvokeAsync()" disabled="@(CurrentPage == 1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </li>
+                @for (int i = 1; i <= TotalPages; i++)
+                {
+                    var pageNumber = i;
+                    <li class="page-item @(pageNumber == CurrentPage ? "active" : "")">
+                        <button class="page-link" @onclick="() => OnPageChange.InvokeAsync(pageNumber)">@pageNumber</button>
+                    </li>
+                }
+                <li class="page-item @(CurrentPage == TotalPages ? "disabled" : "")">
+                    <button class="page-link" @onclick="() => OnNextPage.InvokeAsync()" disabled="@(CurrentPage == TotalPages)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="record-info">
+            @StartRecord - @EndRecord of @TotalRecords items
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool Loading { get; set; }
+
+    [Parameter]
+    public List<SoOrder> Orders { get; set; } = new();
+
+    [Parameter]
+    public int CurrentPage { get; set; }
+
+    [Parameter]
+    public int TotalPages { get; set; }
+
+    [Parameter]
+    public int StartRecord { get; set; }
+
+    [Parameter]
+    public int EndRecord { get; set; }
+
+    [Parameter]
+    public int TotalRecords { get; set; }
+
+    [Parameter]
+    public EventCallback<long> OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback<long> OnDelete { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnPageChange { get; set; }
+
+    [Parameter]
+    public EventCallback OnPreviousPage { get; set; }
+
+    [Parameter]
+    public EventCallback OnNextPage { get; set; }
+}
